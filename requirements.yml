@@ -1,0 +1,4 @@
+---
+roles:
+  # Install the conda package manager
+  - name: evandam.conda
