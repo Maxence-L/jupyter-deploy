@@ -3,42 +3,43 @@
 
 - name: Download conda Package
   get_url:
-    url: {{ conda_source_url  }}
-    dest: {{ conda_file_destination }}
-    checksum: {{ conda_source_checksum}}
+    url: "{{ conda_source_url  }}"
+    dest: "{{ conda_file_destination }}"
+    checksum: "{{ conda_source_checksum}}"
     mode: 0550
 
 - name: Create conda install folder
-  become: True
+  become: yes
   file:
-    path: {{ conda_install_path }}
+    path: "{{ conda_install_path }}"
     state: directory
-    owner: {{ ansible_user }}
-    mode: 755
+    mode: 0755
     recurse: yes
+    owner: "{{ ansible_user }}"
 
 - name: Install conda
-  shell: {{ conda_file_destination }} -b -u -p {{ conda_install_path }}
+  shell: "{{ conda_file_destination }} -b -u -p {{ conda_install_path }}"
 
 - name: Remove the install file
+  become: yes
   file:
     state: absent
-    path: {{ conda_file_destination }}
+    path: "{{ conda_file_destination }}"
 
 - name: Add conda to path
-  become: True
-  shell: echo 'export PATH=$CONDA_PATH:$PATH' >> /etc/profile
-  environment: 
-    CONDA_PATH: {{ conda_install_path }}
+  become: yes
+  shell: echo "export PATH={{ conda_install_path}}/bin:$PATH" >> /etc/profile
 
 - name: Set read permission for all
-  become: True
+  become: yes
   file:
-    path: {{ conda_install_path + '/bin' }}
+    path: "{{ conda_install_path + '/bin' }}"
     mode: +r
     recurse: yes
 
+
 - name: Set execution permission for all
-  become: True
+  become: yes
   file:
-    path: {{ conda_install_path}}
+    path: "{{ conda_install_path + '/bin' }}"
+
