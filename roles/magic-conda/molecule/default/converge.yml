@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: all
+  remote_user: root
+  vars:
+    ansible_user: root
+    ansible_python_interpreter: /usr/bin/python3
+  tasks:
+    - name: "Include magic-conda"
+      include_role:
+        name: "magic-conda"
