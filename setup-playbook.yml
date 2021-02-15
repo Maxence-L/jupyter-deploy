@@ -1,31 +1,13 @@
 ---
-# Playbook to setup a new user with a datascience working environment
-
-# 1. Create a new user
-
-- hosts: all
+- name: Create a user
+  hosts: all
   remote_user: root
-  vars: 
-    account_name: 'datascientist'
-  tasks:
-    - name: Create wheel group
-      group:
-        name: wheel
-        state: present
-    - name: "Create a new user"
-      user: name={{ account_name }}
-            password='$6$sceretsalt$tBcfGEgifQpQZsg5CIGZ79XC55h5vHy7UWrys7cAF37KNCQQbm7iCvy58MlLQLaS2fLF6ZjqDVHhVrkMdRi0f0'
-            shell=/bin/bash
-            group=wheel
-    - name: Set wheel group with sudo rights
-      lineinfile:
-        dest: /etc/sudoers
-        state: present
-        regexp: '^%wheel'
-        line: '%wheel ALL=(ALL)'
-    - name: Add user to sudoers
-      user:
-        name='{{ acount_name }}'
-        groups=wheel
-        append=yes
-        state=present
+  roles:
+    - role: create-user
+
+  
+
+
+
+
+#    - role: magic-conda

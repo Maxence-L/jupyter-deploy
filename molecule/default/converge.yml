@@ -1,7 +1,5 @@
 ---
-- name: Converge
-  hosts: all
-  tasks:
-    - name: "Include test-ansible"
-      include_role:
-        name: "test-ansible"
+
+  
+- import_playbook: ../../setup-playbook.yml
+  
