@@ -1,0 +1,30 @@
+---
+# Playbook to setup a new user with a datascience working environment
+
+# 1. Create a new user
+
+- name: Create wheel group
+  group:
+    name: wheel
+    state: present
+
+- name: "Create a new user"
+  user: 
+    name: "{{ inventory_hostname }}"
+    shell: /bin/bash
+    group: wheel
+    password: "{{ lookup('password', 'credentials/' + inventory_hostname + '_password.txt encrypt=sha512_crypt' )}}"
+        
+- name: Set wheel group with sudo rights
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%wheel'
+    line: '%wheel ALL=(ALL)'
+    
+- name: Add user to sudoers
+  user:
+    name: "{{ inventory_hostname }}"
+    groups: wheel
+    append: yes
+    state: present
