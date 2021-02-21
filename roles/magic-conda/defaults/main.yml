@@ -1,18 +1,2 @@
 ---
-# default install file for magic-conda
-conda_source_url: "https://repo.continuum.io/miniconda/Miniconda3-4.5.4-Linux-x86_64.sh"
-conda_file_destination: "/tmp/install-miniconda.sh"
-conda_source_checksum: "md5:a946ea1d0c4a642ddf0c3a26a18bb16d"
-conda_install_path: "/opt/miniconda3"
-
-
-# default packages to install
-data_science_package_bundle:
-  - pandas
-  - numpy
-  - scikit-learn
-  - jupyterlab
-  - matplotlib
-
-environment_default_name: "jupy-env"
 
